@@ -135,11 +135,17 @@ export class SimulatorService {
     });
     this.applyChanges(changes, source);
     this.recordPower();
+    this.evaluateAlertsAndBroadcast();
+  }
 
+  /**
+   * Run the alert engine against current state, then broadcast a summary built
+   * AFTER evaluation — so emitted alert messages/counts are never stale.
+   */
+  private evaluateAlertsAndBroadcast(): void {
+    this.alerts.evaluate(this.office.buildSummary().rooms);
     const summary = this.office.buildSummary();
-    this.alerts.evaluate(summary.rooms);
-    this.realtime.emit('office:summary.updated', this.office.buildSummary());
-
+    this.realtime.emit('office:summary.updated', summary);
     // Emit per-room updates so map/panels stay in sync.
     for (const room of summary.rooms) this.realtime.emit('room:updated', room);
   }
@@ -151,10 +157,7 @@ export class SimulatorService {
     const nextStatus: DeviceStatus = device.status === 'ON' ? 'OFF' : 'ON';
     this.applyChanges([{ deviceId, nextStatus }], source);
     this.recordPower();
-    const summary = this.office.buildSummary();
-    this.alerts.evaluate(summary.rooms);
-    this.realtime.emit('office:summary.updated', summary);
-    for (const room of summary.rooms) this.realtime.emit('room:updated', room);
+    this.evaluateAlertsAndBroadcast();
     return true;
   }
 

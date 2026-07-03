@@ -46,6 +46,29 @@ describe('simulator scenarios', () => {
     expect(events).toContain('room:updated');
   });
 
+  it('broadcasts post-evaluation alert text on toggle (no stale messages)', () => {
+    // 22:00 -> after hours, so toggling a device ON creates an alert.
+    const c = makeTestContainer(new Date(2026, 0, 1, 22, 0, 0));
+    const room = c.office.buildSummary().rooms[0]!;
+    const [d1, d2] = c.repositories.devices.findByRoomId(room.id);
+
+    c.simulator.toggleDevice(d1!.id); // alert created: "1 device"
+
+    const spy = vi.spyOn(c.realtime, 'emit');
+    c.simulator.toggleDevice(d2!.id); // second device ON
+
+    // The EMITTED summary (what the dashboard receives) must already carry
+    // the refreshed "2 device" message, not the stale "1 device" one.
+    const summaries = spy.mock.calls.filter((call) => call[0] === 'office:summary.updated');
+    expect(summaries.length).toBeGreaterThan(0);
+    const emitted = summaries[summaries.length - 1]![1] as {
+      activeAlerts: { message: string }[];
+    };
+    const roomAlert = emitted.activeAlerts.find((a) => a.message.includes(room.name));
+    expect(roomAlert).toBeDefined();
+    expect(roomAlert!.message).toContain('2 device');
+  });
+
   it('does not flip every device every tick under normal hours', () => {
     const c = makeTestContainer();
     c.simulator.setScenario('normal-working-hours');

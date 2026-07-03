@@ -13,6 +13,7 @@ import type { AlertRule, AlertSignal } from './types.js';
 
 export interface AlertEvaluationResult {
   created: AlertDto[];
+  updated: AlertDto[];
   resolved: AlertDto[];
 }
 
@@ -65,8 +66,23 @@ export class AlertService {
     const desiredKeys = new Set(signals.map((s) => s.deduplicationKey));
 
     const created: AlertDto[] = [];
+    const updated: AlertDto[] = [];
     for (const signal of signals) {
-      if (this.alerts.findActiveByDedupe(signal.deduplicationKey)) continue; // dedupe: no spam
+      const existing = this.alerts.findActiveByDedupe(signal.deduplicationKey);
+      if (existing) {
+        // Already active (dedupe: no new alert, no re-notify) — but keep the
+        // message/severity in sync with live numbers so it never goes stale.
+        if (existing.message !== signal.message || existing.severity !== signal.severity) {
+          this.alerts.refresh(existing.id, signal.message, signal.severity);
+          updated.push(
+            this.toDto(
+              { ...existing, message: signal.message, severity: signal.severity },
+              signal.roomId ? (roomNameById.get(signal.roomId) ?? null) : null,
+            ),
+          );
+        }
+        continue;
+      }
       const row: AlertRow = {
         id: randomUUID(),
         type: signal.type,
@@ -100,6 +116,6 @@ export class AlertService {
       logger.info({ type: dto.type, room: dto.roomName }, 'alert resolved');
     }
 
-    return { created, resolved };
+    return { created, updated, resolved };
   }
 }

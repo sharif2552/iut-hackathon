@@ -33,8 +33,8 @@ export class GroqMessageComposer implements MessageComposer {
   private readonly rotator: GroqKeyRotator;
   private readonly template = new TemplateMessageComposer();
 
-  constructor() {
-    this.rotator = new GroqKeyRotator(config.groqKeys);
+  constructor(keys: string[] = config.groqKeys) {
+    this.rotator = new GroqKeyRotator(keys);
   }
 
   private async callGroq(userPayload: unknown): Promise<string | null> {

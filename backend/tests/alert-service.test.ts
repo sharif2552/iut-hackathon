@@ -17,6 +17,30 @@ describe('alert service reconciliation', () => {
     expect(c.repositories.alerts.findActive().length).toBe(firstCount);
   });
 
+  it('keeps an active alert message live as the room changes (no stale text)', () => {
+    const c = makeTestContainer(new Date(2026, 0, 1, 22, 0, 0));
+    const room = c.office.buildSummary().rooms[0]!;
+    const fans = c.repositories.devices
+      .findByRoomId(room.id)
+      .filter((d) => d.type === 'FAN');
+
+    // One fan ON -> alert says "1 device".
+    c.repositories.devices.updateStatus(fans[0]!.id, 'ON', c.clock.now());
+    c.alerts.evaluate(c.office.buildSummary().rooms);
+    let active = c.repositories.alerts.findActive();
+    expect(active).toHaveLength(1);
+    expect(active[0]!.message).toContain('1 device');
+
+    // Second fan ON -> same single alert, but message refreshes to "2 device".
+    c.repositories.devices.updateStatus(fans[1]!.id, 'ON', c.clock.now());
+    const result = c.alerts.evaluate(c.office.buildSummary().rooms);
+    active = c.repositories.alerts.findActive();
+    expect(active).toHaveLength(1); // still deduped, not spammed
+    expect(active[0]!.message).toContain('2 device');
+    expect(result.updated).toHaveLength(1);
+    expect(result.created).toHaveLength(0);
+  });
+
   it('auto-resolves the alert when the condition clears', () => {
     const c = makeTestContainer(new Date(2026, 0, 1, 22, 0, 0));
     const fan = c.repositories.devices.findAll().find((d) => d.type === 'FAN')!;

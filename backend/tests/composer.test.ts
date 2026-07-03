@@ -43,8 +43,9 @@ describe('template message composer', () => {
 
 describe('groq fallback handling', () => {
   it('falls back to the template when no Groq keys are configured', async () => {
-    // Test env has no GROQ keys -> composer must degrade gracefully, never throw.
-    const res = await new GroqMessageComposer().composeStatusMessage(statusFacts);
+    // Explicitly construct with zero keys so this is deterministic regardless of
+    // whether the developer has a real GROQ_API_KEY in their local .env.
+    const res = await new GroqMessageComposer([]).composeStatusMessage(statusFacts);
     expect(res.source).toBe('template');
     expect(res.message.length).toBeGreaterThan(0);
   });

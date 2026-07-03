@@ -37,4 +37,9 @@ export class AlertsRepository {
       .where(eq(alerts.id, id))
       .run();
   }
+
+  /** Refresh the live message/severity of an already-active alert (no new alert). */
+  refresh(id: string, message: string, severity: AlertRow['severity']): void {
+    this.db.update(alerts).set({ message, severity }).where(eq(alerts.id, id)).run();
+  }
 }

@@ -1,0 +1,132 @@
+# =====================================================================
+# Dependencies
+# =====================================================================
+node_modules/
+.pnp/
+.pnp.*
+.yarn/*
+!.yarn/patches
+
+# =====================================================================
+# Secrets & credentials  (NEVER commit these)
+# =====================================================================
+# Env files — ignore every variant, but keep the committed *.example templates
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+!.env.*.example
+!**/.env.*.example
+
+# Package-manager auth (npm/yarn/pnpm tokens live here)
+.npmrc
+**/.npmrc
+.yarnrc
+.yarnrc.yml
+
+# Keys, certificates & tokens
+*.pem
+*.key
+*.cert
+*.crt
+*.cer
+*.der
+*.p12
+*.pfx
+*.keystore
+*.jks
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+*.gpg
+*.asc
+secrets/
+secret.*
+*secret*.json
+*credentials*.json
+serviceaccount*.json
+service-account*.json
+
+# Discord / Groq token drop files (just in case)
+*token*.txt
+bot-token*
+
+# =====================================================================
+# Local databases  (simulated device data — regenerated on run)
+# =====================================================================
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+local.db
+backend/local.db
+
+# =====================================================================
+# Build output & caches
+# =====================================================================
+dist/
+build/
+out/
+*.tsbuildinfo
+.vite/
+frontend/.vite/
+.cache/
+.turbo/
+.eslintcache
+
+# =====================================================================
+# Logs
+# =====================================================================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =====================================================================
+# Test / coverage
+# =====================================================================
+coverage/
+.nyc_output/
+*.lcov
+
+# =====================================================================
+# Editor / IDE
+# =====================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# =====================================================================
+# OS junk
+# =====================================================================
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# =====================================================================
+# Misc archives / temp
+# =====================================================================
+*.tgz
+*.zip
+*.tmp
+tmp/
+temp/
+
+

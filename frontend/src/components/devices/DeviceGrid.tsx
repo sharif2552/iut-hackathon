@@ -3,9 +3,46 @@ import type { DeviceDto, RoomSummaryDto } from '../../services/types';
 import { timeAgo } from '../../lib/format';
 import { Panel } from '../shared/Panel';
 
+const FAN_BLADE_PATH =
+  'M3 -7 C19 -35 47 -47 58 -36 C65 -29 59 -19 48 -18 C28 -16 15 -6 7 6 Z';
+
+function FanStatusIcon({ on, spinKey }: { on: boolean; spinKey: string }) {
+  return (
+    <svg
+      className="device-chip-fan-icon"
+      viewBox="-46 -46 92 92"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle className="device-chip-fan-ring" r="38" />
+      <line className="device-chip-fan-stem" x1="0" y1="8" x2="0" y2="32" />
+      <g
+        key={spinKey}
+        className={`device-chip-fan-rotor ${on ? 'is-spinning' : ''}`}
+      >
+        <path className="device-chip-fan-blade" d={FAN_BLADE_PATH} />
+        <path className="device-chip-fan-blade" d={FAN_BLADE_PATH} transform="rotate(120)" />
+        <path className="device-chip-fan-blade" d={FAN_BLADE_PATH} transform="rotate(240)" />
+      </g>
+      <circle className="device-chip-fan-hub" r="8" />
+      <circle className="device-chip-fan-pin" r="3" />
+    </svg>
+  );
+}
+
+function LightStatusIcon({ on }: { on: boolean }) {
+  return (
+    <span
+      className={`device-chip-light-icon ${on ? 'is-on' : ''}`}
+      aria-hidden="true"
+    >
+      💡
+    </span>
+  );
+}
+
 function DeviceChip({ device, onToggle }: { device: DeviceDto; onToggle: (d: DeviceDto) => void }) {
   const on = device.status === 'ON';
-  const icon = device.type === 'FAN' ? '🌀' : '💡';
   return (
     <motion.button
       layout
@@ -18,9 +55,11 @@ function DeviceChip({ device, onToggle }: { device: DeviceDto; onToggle: (d: Dev
       }`}
     >
       <div className="flex items-center gap-2">
-        <span className={on && device.type === 'FAN' ? 'inline-block fan-blades-on' : ''}>
-          {icon}
-        </span>
+        {device.type === 'FAN' ? (
+          <FanStatusIcon on={on} spinKey={`${device.status}-${device.lastChangedAt}`} />
+        ) : (
+          <LightStatusIcon on={on} />
+        )}
         <div>
           <div className="text-sm font-medium text-slate-100">{device.name}</div>
           <div className="text-[11px] text-slate-500">{timeAgo(device.lastChangedAt)}</div>

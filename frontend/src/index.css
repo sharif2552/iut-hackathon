@@ -25,10 +25,471 @@ body {
   transform-origin: 50% 50%;
 }
 
+.device-chip-fan-icon {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  overflow: visible;
+  filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.18));
+}
+
+.device-chip-fan-ring {
+  fill: rgba(15, 23, 42, 0.46);
+  stroke: rgba(56, 189, 248, 0.62);
+  stroke-width: 3;
+}
+
+.device-chip-fan-stem {
+  stroke: #7c4a22;
+  stroke-width: 6;
+  stroke-linecap: round;
+  opacity: 0.72;
+}
+
+.device-chip-fan-rotor {
+  transform-origin: 0 0;
+}
+
+.device-chip-fan-rotor.is-spinning {
+  animation: fan-spin 0.72s linear infinite;
+}
+
+.device-chip-fan-blade {
+  fill: #8b5727;
+  stroke: #3a2112;
+  stroke-width: 1.2;
+}
+
+.device-chip-fan-hub {
+  fill: #9a6733;
+  stroke: #26150b;
+  stroke-width: 1.2;
+}
+
+.device-chip-fan-pin {
+  fill: #e2bc76;
+}
+
+button:not(:hover) .device-chip-fan-rotor:not(.is-spinning),
+button:not(:hover) .device-chip-fan-rotor:not(.is-spinning) + .device-chip-fan-hub {
+  opacity: 0.58;
+}
+
+.device-chip-light-icon {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  filter: grayscale(0.45) brightness(0.9);
+}
+
+.device-chip-light-icon.is-on {
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.72));
+}
+
 .scrollbar-thin::-webkit-scrollbar {
   width: 8px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background: #233048;
   border-radius: 8px;
+}
+
+.office-map-scroll {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.18), transparent 30%),
+    linear-gradient(135deg, #f8f8f6 0%, #ecece8 52%, #f4f5f2 100%);
+  box-shadow: 0 18px 48px rgba(2, 6, 23, 0.28);
+}
+
+.office-map-rich {
+  display: block;
+  width: 100%;
+  min-width: 760px;
+  height: auto;
+}
+
+.office-map-rich .paper {
+  fill: #f7f7f4;
+  filter: url('#officePaperShadow');
+}
+
+.office-map-rich .map-title {
+  fill: #151515;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.office-map-rich .map-subtitle {
+  fill: #252525;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.office-map-rich .floor-plan {
+  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.18));
+}
+
+.office-map-rich .building-wall,
+.office-map-rich .outer-wall-top,
+.office-map-rich .outer-wall-left,
+.office-map-rich .outer-wall-right,
+.office-map-rich .outer-wall-bottom,
+.office-map-rich .inner-wall {
+  fill: #44433e;
+  stroke: #2f2f2c;
+  stroke-width: 2;
+}
+
+.office-map-rich .room-floor {
+  transition: filter 240ms ease;
+}
+
+.office-map-rich .room-floor-drawing {
+  fill: url('#officeDrawingTiles');
+}
+
+.office-map-rich .room-floor-work1 {
+  fill: url('#officeWorkTiles');
+}
+
+.office-map-rich .room-floor-work2 {
+  fill: url('#officeWoodLines');
+}
+
+.office-map-rich .corridor-floor,
+.office-map-rich .door-gap {
+  fill: url('#officeCorridorTiles');
+}
+
+.office-map-rich .light-spill {
+  fill: url('#officeLightPool');
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.office-map-rich .light-spill.is-on {
+  opacity: 0.82;
+}
+
+.office-map-rich .room-dimmer {
+  fill: #11120f;
+  pointer-events: none;
+  transition: opacity 280ms ease;
+}
+
+.office-map-rich .room-alert-outline {
+  fill: none;
+  stroke: #ef4444;
+  stroke-width: 3;
+  stroke-dasharray: 8 6;
+  filter: drop-shadow(0 0 7px rgba(239, 68, 68, 0.42));
+  pointer-events: none;
+}
+
+.office-map-rich .rug {
+  fill: #d4c6b1;
+  stroke: #b8aa95;
+  stroke-width: 1;
+}
+
+.office-map-rich .furniture {
+  filter: url('#officeFurnitureShadow');
+}
+
+.office-map-rich .coffee-shadow,
+.office-map-rich .sofa-shadow,
+.office-map-rich .desk-shadow,
+.office-map-rich .chair-soft-shadow,
+.office-map-rich .cooler-shadow {
+  fill: rgba(37, 31, 25, 0.24);
+}
+
+.office-map-rich .coffee-table {
+  fill: #9b7650;
+  stroke: #7c5a39;
+  stroke-width: 1.2;
+}
+
+.office-map-rich .coffee-highlight {
+  fill: rgba(255, 242, 203, 0.22);
+}
+
+.office-map-rich .sofa-body,
+.office-map-rich .sofa-arm,
+.office-map-rich .sofa-cushion,
+.office-map-rich .chair-soft,
+.office-map-rich .chair-soft-seat {
+  stroke: #8b7b63;
+  stroke-width: 1.2;
+}
+
+.office-map-rich .sofa-body,
+.office-map-rich .chair-soft {
+  fill: #c1af90;
+}
+
+.office-map-rich .sofa-arm {
+  fill: #b09c7d;
+}
+
+.office-map-rich .sofa-cushion,
+.office-map-rich .chair-soft-seat {
+  fill: #d0bfa1;
+}
+
+.office-map-rich .desk {
+  filter: url('#officeFurnitureShadow');
+}
+
+.office-map-rich .desk-top {
+  fill: #ba8754;
+  stroke: #805b38;
+  stroke-width: 1.2;
+}
+
+.office-map-rich .desk-edge {
+  fill: rgba(255, 220, 164, 0.26);
+}
+
+.office-map-rich .monitor {
+  fill: #26313a;
+  stroke: #111820;
+  stroke-width: 1.2;
+}
+
+.office-map-rich .monitor-base,
+.office-map-rich .keyboard {
+  fill: #1a2229;
+}
+
+.office-map-rich .chair-back {
+  fill: #4e5658;
+}
+
+.office-map-rich .chair-seat {
+  fill: #31383a;
+}
+
+.office-map-rich .tiny-plant-pot {
+  fill: #756044;
+}
+
+.office-map-rich .tiny-plant-leaf {
+  fill: #4f8b4a;
+  stroke: #376d36;
+  stroke-width: 0.8;
+}
+
+.office-map-rich .plant-pot {
+  fill: #805d39;
+  stroke: #62442b;
+  stroke-width: 1;
+}
+
+.office-map-rich .leaf {
+  fill: #75a84d;
+  stroke: #477c38;
+  stroke-width: 1;
+}
+
+.office-map-rich .leaf-b,
+.office-map-rich .leaf-d {
+  fill: #5f963f;
+}
+
+.office-map-rich .leaf-e {
+  fill: #86b85a;
+}
+
+.office-map-rich .water-bottle {
+  fill: #7ab6dc;
+  stroke: #4a89ae;
+  stroke-width: 1.2;
+  opacity: 0.86;
+}
+
+.office-map-rich .cooler-body {
+  fill: #e7e2d8;
+  stroke: #aaa498;
+  stroke-width: 1;
+}
+
+.office-map-rich .cooler-panel {
+  fill: #b7c3c8;
+}
+
+.office-map-rich .water-line {
+  fill: rgba(255, 255, 255, 0.48);
+}
+
+.office-map-rich .door-leaf {
+  stroke: #6b5b47;
+  stroke-width: 3.6;
+  stroke-linecap: square;
+}
+
+.office-map-rich .door-hit {
+  fill: transparent;
+}
+
+.office-map-rich .door-hinge {
+  fill: #5f523f;
+  stroke: #2d251c;
+  stroke-width: 0.8;
+}
+
+.office-map-rich .entry-label {
+  fill: #1a1a18;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.office-map-rich .entry-arrow {
+  fill: none;
+  stroke: #1c1c1b;
+  stroke-width: 2.2;
+}
+
+.office-map-rich .window rect {
+  fill: #d9eef1;
+  stroke: #586f74;
+  stroke-width: 1.3;
+}
+
+.office-map-rich .window line {
+  stroke: #89afb8;
+  stroke-width: 1.3;
+}
+
+.office-map-rich .room-label {
+  fill: #1d1d1b;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0;
+  paint-order: stroke;
+  stroke: rgba(255, 255, 255, 0.72);
+  stroke-width: 2;
+}
+
+.office-map-rich .device {
+  cursor: pointer;
+  outline: none;
+}
+
+.office-map-rich .device-hit {
+  fill: transparent;
+}
+
+.office-map-rich .device:focus-visible .device-hit,
+.office-map-rich .device:hover .device-hit {
+  fill: rgba(255, 255, 255, 0.18);
+  stroke: rgba(31, 41, 55, 0.28);
+  stroke-width: 1;
+}
+
+.office-map-rich .fan-stem {
+  stroke: #4a2e19;
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.office-map-rich .fan:not(.is-on) .fan-motion {
+  opacity: 0;
+}
+
+.office-map-rich .fan-motion {
+  opacity: 0.28;
+  filter: blur(0.9px);
+}
+
+.office-map-rich .fan-blade {
+  fill: #4a2b16;
+  stroke: #2e1a0e;
+  stroke-width: 1.2;
+}
+
+.office-map-rich .fan-motion-blade {
+  fill: rgba(85, 52, 26, 0.42);
+}
+
+.office-map-rich .fan:not(.is-on) .fan-blade,
+.office-map-rich .fan:not(.is-on) .fan-stem,
+.office-map-rich .fan:not(.is-on) .fan-hub,
+.office-map-rich .fan:not(.is-on) .fan-pin {
+  opacity: 0.64;
+}
+
+.office-map-rich .fan-hub {
+  fill: #5c341b;
+  stroke: #24150d;
+  stroke-width: 1.2;
+}
+
+.office-map-rich .fan-pin {
+  fill: #c1a06e;
+}
+
+.office-map-rich .bulb-aura {
+  fill: #ffe97d;
+  opacity: 0;
+  filter: url('#officeBulbGlow');
+  transition: opacity 220ms ease;
+}
+
+.office-map-rich .bulb-glass {
+  fill: #e5e0d5;
+  stroke: #9c978d;
+  stroke-width: 1.8;
+  transition:
+    fill 220ms ease,
+    stroke 220ms ease,
+    filter 220ms ease;
+}
+
+.office-map-rich .bulb-core {
+  fill: #b9b2a5;
+  transition: fill 220ms ease;
+}
+
+.office-map-rich .bulb-shine {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.7);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.55;
+  transition: opacity 220ms ease;
+}
+
+.office-map-rich .light.is-on .bulb-aura {
+  opacity: 0.9;
+}
+
+.office-map-rich .light.is-on .bulb-glass {
+  fill: #fff3a1;
+  stroke: #d9a52d;
+  filter: url('#officeBulbGlow');
+}
+
+.office-map-rich .light.is-on .bulb-core {
+  fill: #fffbd1;
+}
+
+.office-map-rich .light:not(.is-on) .bulb-shine {
+  opacity: 0.28;
+}
+
+@media (max-width: 560px) {
+  .office-map-rich {
+    min-width: 620px;
+  }
 }

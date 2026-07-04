@@ -1,0 +1,15 @@
+node_modules
+dist
+build
+coverage
+.git
+.DS_Store
+*.log
+*.db
+*.db-shm
+*.db-wal
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example

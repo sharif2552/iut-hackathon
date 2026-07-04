@@ -1,0 +1,9 @@
+# Wokwi for VS Code configuration.
+# The extension needs a COMPILED firmware binary. Build it first with PlatformIO
+# (see platformio.ini): run  `pio run`  in this folder, then start the simulator.
+#
+# Paths below point at PlatformIO's build output for the esp32dev environment.
+[wokwi]
+version = 1
+firmware = '.pio/build/esp32dev/firmware.bin'
+elf = '.pio/build/esp32dev/firmware.elf'
